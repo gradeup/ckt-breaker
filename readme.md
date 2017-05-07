@@ -15,7 +15,13 @@ $ npm install --save ckt-breaker
 ```js
 const cktBreaker = require('ckt-breaker');
 
-cktBreaker('unicorns');
+cktBreaker(fn, {
+	retry: 10000, // time in ms after which to retry hitting fn
+	timeout: 1000, // time in ms to timeout if fn takes longer than that
+	maxError: 10, // Max no of errors
+	maxTime: 1000, // time in ms in which maxError occurs
+	fallback: () => Promise.reject(new Error('Service Currently unavailable')),
+});
 //=> 'unicorns & rainbows'
 ```
 
