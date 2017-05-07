@@ -1,6 +1,6 @@
 {
   "name": "ckt-breaker",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Tiny circuit breaker implementation in js with zero deps",
   "license": "MIT",
   "repository": "gradeup/ckt-breaker",
