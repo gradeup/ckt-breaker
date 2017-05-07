@@ -2,7 +2,9 @@
 
 > Tiny circuit breaker implementation. Wrapped service must return Promise.
 
-
+## Requirements
+-  node v6+
+-  npm 3+
 ## Install
 
 ```
