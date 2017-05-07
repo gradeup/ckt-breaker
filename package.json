@@ -1,9 +1,9 @@
 {
   "name": "ckt-breaker",
   "version": "0.0.0",
-  "description": "Tiny circuit breaker implementation in js",
+  "description": "Tiny circuit breaker implementation in js with zero deps",
   "license": "MIT",
-  "repository": "niksrc/ckt-breaker",
+  "repository": "gradeup/ckt-breaker",
   "author": {
     "name": "Nikhil Srivastava",
     "email": "niksrc@gmail.com",
@@ -19,7 +19,9 @@
     "index.js"
   ],
   "keywords": [
-    ""
+    "Circuit breaker",
+    "fuse",
+    "resilience"
   ],
   "dependencies": {},
   "devDependencies": {

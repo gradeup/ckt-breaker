@@ -1,6 +1,6 @@
-# ckt-breaker [![Build Status](https://travis-ci.org/niksrc/ckt-breaker.svg?branch=master)](https://travis-ci.org/niksrc/ckt-breaker) [![Coverage Status](https://coveralls.io/repos/github/niksrc/ckt-breaker/badge.svg?branch=master)](https://coveralls.io/github/niksrc/ckt-breaker?branch=master)
+# ckt-breaker [![Build Status](https://travis-ci.org/gradeup/ckt-breaker.svg?branch=master)](https://travis-ci.org/gradeup/ckt-breaker) [![Coverage Status](https://coveralls.io/repos/github/gradeup/ckt-breaker/badge.svg?branch=master)](https://coveralls.io/github/gradeup/ckt-breaker?branch=master)
 
-> Tiny circuit breaker implementation in js
+> Tiny circuit breaker implementation. Wrapped service must return Promise.
 
 
 ## Install
@@ -14,37 +14,88 @@ $ npm install --save ckt-breaker
 
 ```js
 const cktBreaker = require('ckt-breaker');
+// Function that hits some service 
+const fn = () => Promise.reject('I got nothing');
 
-cktBreaker(fn, {
+const ckt = cktBreaker(fn, {
 	retry: 10000, // time in ms after which to retry hitting fn
 	timeout: 1000, // time in ms to timeout if fn takes longer than that
 	maxError: 10, // Max no of errors
 	maxTime: 1000, // time in ms in which maxError occurs
 	fallback: () => Promise.reject(new Error('Service Currently unavailable')),
 });
-//=> 'unicorns & rainbows'
+
+ckt.fire('hello world') // Safe doesn't overload the remote service
 ```
 
 
 ## API
 
-### cktBreaker(input, [options])
+### cktBreaker(fn, {options})
 
-#### input
+#### fn
 
-Type: `string`
+Type: `function`
 
-Lorem ipsum.
+A promise returning function 
 
 #### options
 
-##### foo
+##### retry
 
-Type: `boolean`<br>
-Default: `false`
+Type: `integer`<br>
+Default: `10000`
 
-Lorem ipsum.
+Time in ms after which to retry hitting fn
 
+##### timeout
+
+Type: `integer`<br>
+Default: `0`
+
+Time in ms to timeout fn if fn takes longer than that.
+By default this is disabled (0). 
+
+##### maxError
+
+Type: `integer`<br>
+Default: `10`
+
+No of errors in `maxTime` time to occur before breaking the circuit
+
+##### maxTime
+
+Type: `integer`<br>
+Default: `1000`
+
+Time Frame to consider maxError no of error to break the circuit
+
+##### fallback
+
+Type: `function`<br>
+Default: ```() => Promise.reject(new Error('Service Currently unavailable')```
+
+Fallback function to call when circuit is broken
+
+### Methods
+
+#### fire
+
+``` 
+const ckt = cktBreaker(fn); 
+ckt.fire([1,2,3]) // Any args taken by fn;
+```
+Function that runs wrapped fn and passes over arguments given to it
+
+### Events
+
+#### open
+
+Fired when circuit is opened
+
+#### closed
+
+Fired when circuit is closed
 
 ## License
 
