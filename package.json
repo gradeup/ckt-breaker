@@ -1,0 +1,59 @@
+{
+  "name": "ckt-breaker",
+  "version": "0.0.0",
+  "description": "Tiny circuit breaker implementation in js",
+  "license": "MIT",
+  "repository": "niksrc/ckt-breaker",
+  "author": {
+    "name": "Nikhil Srivastava",
+    "email": "niksrc@gmail.com",
+    "url": "niksrc.github.io"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "xo && nyc ava"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    ""
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "coveralls": "^2.11.12",
+    "nyc": "^10.0.0",
+    "xo": "^0.17.0"
+  },
+  "xo": {
+    "esnext": true,
+    "rules": {
+      "comma-dangle": [
+        "error",
+        "always-multiline"
+      ],
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "no-new": [
+        "warn"
+      ],
+      "unicorn/filename-case": [
+        "warn"
+      ]
+    },
+    "ignores": [
+      "public/**"
+    ]
+  },
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  }
+}
