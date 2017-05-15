@@ -1,0 +1,143 @@
+{
+  "name": "gradeup/ckt-breaker",
+  "version": "0.1.4",
+  "libraries": {
+    "xv": "^1.1.25"
+  },
+  "title": "",
+  "branch": "",
+  "style": {
+    "name": "Default",
+    "componentSet": {
+      "nav": "nav/BasicNav",
+      "header": "header/BannerHeader",
+      "article": "article/BasicArticle",
+      "footer": "footer/BasicFooter"
+    },
+    "fontFamily": "-apple-system, BlinkMacSystemFont, sans-serif",
+    "fontWeight": 400,
+    "bold": 600,
+    "lineHeight": 1.5,
+    "typeScale": [
+      72,
+      48,
+      24,
+      20,
+      16,
+      14,
+      12
+    ],
+    "monospace": "Menlo, monospace",
+    "heading": {
+      "fontFamily": null,
+      "fontStyle": null,
+      "fontWeight": 600,
+      "lineHeight": 1.25,
+      "textTransform": null,
+      "letterSpacing": null
+    },
+    "h0": {},
+    "h1": {},
+    "h2": {},
+    "h3": {},
+    "h4": {},
+    "h5": {},
+    "h6": {},
+    "alternativeText": {},
+    "space": [
+      0,
+      8,
+      16,
+      32,
+      48,
+      64,
+      96
+    ],
+    "layout": {
+      "maxWidth": 1024,
+      "centered": false
+    },
+    "colors": {
+      "text": "#111",
+      "background": "#fff",
+      "primary": "#08e",
+      "secondary": "#059",
+      "highlight": "#e08",
+      "border": "#ddd",
+      "muted": "#eee"
+    },
+    "border": {
+      "width": 1,
+      "radius": 2
+    },
+    "link": {},
+    "button": {
+      "hover": {
+        "boxShadow": "inset 0 0 0 999px rgba(0, 0, 0, .125)"
+      }
+    },
+    "input": {},
+    "body": {
+      "margin": 0
+    },
+    "breakpoints": {
+      "xs": "@media screen and (max-width:40em)",
+      "sm": "@media screen and (min-width:40em)",
+      "md": "@media screen and (min-width:52em)",
+      "lg": "@media screen and (min-width:64em)"
+    }
+  },
+  "content": [
+    {
+      "component": "nav",
+      "links": [
+        {
+          "href": "https://github.com/gradeup/ckt-breaker",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://npmjs.com/package/ckt-breaker",
+          "text": "npm"
+        }
+      ]
+    },
+    {
+      "component": "header",
+      "heading": "ckt-breaker",
+      "subhead": "Circuit breaker implementation in < 100 lines ",
+      "children": [
+        {
+          "component": "ui/TweetButton",
+          "text": "ckt-breaker: Circuit breaker implementation in < 100 lines ",
+          "url": null
+        },
+        {
+          "component": "ui/GithubButton",
+          "user": "gradeup",
+          "repo": "ckt-breaker"
+        }
+      ],
+      "text": "v1.0.0"
+    },
+    {
+      "component": "article",
+      "metadata": {
+        "source": "github.readme"
+      },
+      "html": "\n<blockquote>\n<p>Tiny circuit breaker implementation. Wrapped service must return Promise.</p>\n</blockquote>\n<h2>Requirements</h2>\n<ul>\n<li>node v6+</li>\n<li>npm 3+<h2>Install</h2>\n</li>\n</ul>\n<pre>$ npm <span class=\"hljs-keyword\">install</span> <span class=\"hljs-comment\">--save ckt-breaker</span></pre><h2>Usage</h2>\n<pre><span class=\"hljs-keyword\">const</span> cktBreaker = <span class=\"hljs-built_in\">require</span>(<span class=\"hljs-string\">&apos;ckt-breaker&apos;</span>);\n<span class=\"hljs-comment\">// Function that hits some service </span>\n<span class=\"hljs-keyword\">const</span> fn = <span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-built_in\">Promise</span>.reject(<span class=\"hljs-string\">&apos;I got nothing&apos;</span>);\n\n<span class=\"hljs-keyword\">const</span> ckt = cktBreaker(fn, {\n    <span class=\"hljs-attr\">retry</span>: <span class=\"hljs-number\">10000</span>, <span class=\"hljs-comment\">// time in ms after which to retry hitting fn</span>\n    timeout: <span class=\"hljs-number\">1000</span>, <span class=\"hljs-comment\">// time in ms to timeout if fn takes longer than that</span>\n    maxError: <span class=\"hljs-number\">10</span>, <span class=\"hljs-comment\">// Max no of errors</span>\n    maxTime: <span class=\"hljs-number\">1000</span>, <span class=\"hljs-comment\">// time in ms in which maxError occurs</span>\n    fallback: <span class=\"hljs-function\"><span class=\"hljs-params\">()</span> =&gt;</span> <span class=\"hljs-built_in\">Promise</span>.reject(<span class=\"hljs-keyword\">new</span> <span class=\"hljs-built_in\">Error</span>(<span class=\"hljs-string\">&apos;Service Currently unavailable&apos;</span>)),\n});\n\nckt.fire(<span class=\"hljs-string\">&apos;hello world&apos;</span>) <span class=\"hljs-comment\">// Safe doesn&apos;t overload the remote service</span></pre><h2>API</h2>\n<h3>cktBreaker(fn, {options})</h3>\n<h4>fn</h4>\n<p>Type: <code>function</code></p>\n<p>A promise returning function </p>\n<h4>options</h4>\n<h5>retry</h5>\n<p>Type: <code>integer</code><br>\nDefault: <code>10000</code></p>\n<p>Time in ms after which to retry hitting fn</p>\n<h5>timeout</h5>\n<p>Type: <code>integer</code><br>\nDefault: <code>0</code></p>\n<p>Time in ms to timeout fn if fn takes longer than that.\nBy default this is disabled (0). </p>\n<h5>maxError</h5>\n<p>Type: <code>integer</code><br>\nDefault: <code>10</code></p>\n<p>No of errors in <code>maxTime</code> time to occur before breaking the circuit</p>\n<h5>maxTime</h5>\n<p>Type: <code>integer</code><br>\nDefault: <code>1000</code></p>\n<p>Time Frame to consider maxError no of error to break the circuit</p>\n<h5>fallback</h5>\n<p>Type: <code>function</code><br>\nDefault: <code>() =&gt; Promise.reject(new Error(&apos;Service Currently unavailable&apos;)</code></p>\n<p>Fallback function to call when circuit is broken</p>\n<h3>Methods</h3>\n<h4>fire</h4>\n<pre>const ckt = cktBreaker(fn); \nckt.fire([<span class=\"hljs-number\">1</span>,<span class=\"hljs-number\">2</span>,<span class=\"hljs-number\">3</span>]) <span class=\"hljs-comment\">// Any args taken by fn;</span></pre><p>Function that runs wrapped fn and passes over arguments given to it</p>\n<h3>Events</h3>\n<h4>open</h4>\n<p>Fired when circuit is opened</p>\n<h4>closed</h4>\n<p>Fired when circuit is closed</p>\n<h2>License</h2>\n<p>MIT &#xA9; <a href=\"http://niksrc.github.io\">Nikhil Srivastava</a></p>\n"
+    },
+    {
+      "component": "footer",
+      "links": [
+        {
+          "href": "https://github.com/gradeup/ckt-breaker",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://github.com/gradeup",
+          "text": "gradeup"
+        }
+      ]
+    }
+  ]
+}
