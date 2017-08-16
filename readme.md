@@ -27,9 +27,10 @@ const ckt = cktBreaker(fn, {
 	fallback: () => Promise.reject(new Error('Service Currently unavailable')),
 });
 
-ckt.fire('hello world') // Safe doesn't overload the remote service
+ckt.fire('hello world').catch(err => console.log(err)) // Safe doesn't overload the remote service
 ```
 
+If you are using this for one off scripts (eg. console apps), use `process.exit(0)` to exit the app.
 
 ## API
 
